@@ -28,7 +28,7 @@ export const Verticals = () => {
     <section id="verticais" className="section-padding bg-black relative">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12 md:mb-24 text-center md:text-left">
-          <span className="text-[11px] uppercase tracking-[0.5em] text-white/40 mb-4 block">Ecosistema</span>
+          <span className="section-label mb-4 block">Ecossistema</span>
           <h2 className="text-3xl md:text-4xl font-display font-light uppercase tracking-[0.3em] text-gradient">O Grupo</h2>
         </div>
 

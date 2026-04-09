@@ -27,7 +27,8 @@ export const About = () => {
         >
           <div className="flex flex-col md:flex-row items-center md:items-center gap-4 mb-8">
             <div className="w-8 h-[1px] bg-selecto-gold" />
-            <span className="text-[10px] uppercase tracking-[0.5em] text-white/50">Sobre o Grupo</span>
+            <div className="w-8 h-[1px] bg-selecto-gold" />
+            <span className="section-label">Sobre o Grupo</span>
           </div>
           
           <h2 className="text-3xl md:text-5xl lg:text-5xl font-display font-light mb-12 leading-[1.2] text-gradient pb-2 px-2 text-center md:text-left">
@@ -47,12 +48,12 @@ export const About = () => {
           <div className="mt-16 flex items-center justify-center md:justify-start gap-12 border-t border-white/5 pt-12">
             <div>
               <div className="text-2xl font-display text-white mb-1">2026</div>
-              <div className="text-[11px] uppercase tracking-[0.2em] text-white/30">Visão Estratégica</div>
+              <div className="section-label !text-[11px] !text-white/30">Visão Estratégica</div>
             </div>
             <div className="w-[1px] h-10 bg-white/10" />
             <div>
               <div className="text-2xl font-display text-white mb-1">Sólido</div>
-              <div className="text-[11px] uppercase tracking-[0.2em] text-white/30">Crescimento</div>
+              <div className="section-label !text-[11px] !text-white/30">Crescimento</div>
             </div>
           </div>
         </motion.div>

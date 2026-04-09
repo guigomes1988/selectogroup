@@ -50,8 +50,9 @@ export const Contact = () => {
       <div className="max-w-4xl mx-auto">
         <GlassCard>
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-light uppercase tracking-widest mb-4">Fale com o Grupo</h2>
-            <p className="text-white/40 font-light">Sua visão estratégica começa com uma estrutura sólida.</p>
+            <span className="section-label mb-4 block">Canais de Atendimento</span>
+            <h2 className="text-3xl md:text-4xl font-display font-light uppercase tracking-[0.3em] text-gradient">Fale com o Grupo</h2>
+            <p className="text-white/40 font-light mt-4">Sua visão estratégica começa com uma estrutura sólida.</p>
           </div>
 
           {status === "success" ? (
@@ -73,7 +74,7 @@ export const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="flex flex-col gap-3">
-                  <label className="text-[11px] uppercase tracking-[0.4em] text-white/30 ml-4">Nome</label>
+                  <label className="section-label !text-[11px] !text-white/30 ml-4 mb-2 block">Nome</label>
                   <input 
                     type="text" 
                     required 
@@ -84,7 +85,7 @@ export const Contact = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-3">
-                  <label className="text-[11px] uppercase tracking-[0.4em] text-white/30 ml-4">Email</label>
+                  <label className="section-label !text-[11px] !text-white/30 ml-4 mb-2 block">Email</label>
                   <input 
                     type="email" 
                     required 
@@ -96,7 +97,7 @@ export const Contact = () => {
                 </div>
               </div>
               <div className="flex flex-col gap-3">
-                <label className="text-[11px] uppercase tracking-[0.4em] text-white/30 ml-4">Mensagem</label>
+                <label className="section-label !text-[11px] !text-white/30 ml-4 mb-2 block">Mensagem</label>
                 <textarea 
                   rows={4} 
                   value={formData.message}

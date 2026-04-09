@@ -28,8 +28,8 @@ export const FAQ = () => {
     <section id="faq" className="section-padding bg-black">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-display font-light uppercase tracking-[0.3em] mb-4">FAQ</h2>
-          <div className="w-12 h-[1px] bg-white/20 mx-auto" />
+          <span className="section-label mb-4 block">Dúvidas Frequentes</span>
+          <h2 className="text-3xl md:text-4xl font-display font-light uppercase tracking-[0.3em] text-gradient">FAQ</h2>
         </div>
 
         <div className="space-y-4">

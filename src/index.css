@@ -50,6 +50,10 @@
   .section-padding {
     @apply py-20 md:py-32 px-6 md:px-12 lg:px-32;
   }
+
+  .section-label {
+    @apply text-[13px] uppercase tracking-[0.25em] text-white/50 font-medium;
+  }
 }
 
 .text-gradient {

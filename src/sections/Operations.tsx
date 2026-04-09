@@ -25,7 +25,7 @@ export const Operations = () => {
     <section id="operação" className="section-padding bg-[#050505] relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 md:mb-24">
-          <span className="text-[10px] uppercase tracking-[0.5em] text-white/40 mb-4 block">Metodologia</span>
+          <span className="section-label mb-4 block">Metodologia</span>
           <h2 className="text-3xl md:text-4xl font-display font-light uppercase tracking-[0.3em] text-gradient">Como o grupo opera</h2>
         </div>
 
