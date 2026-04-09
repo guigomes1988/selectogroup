@@ -29,7 +29,7 @@ export const siteConfig = {
 
   // Endpoints de API
   api: {
-    leads: "http://localhost:3001/api/leads", // Altere para a URL de produção futuramente
+    leads: (import.meta.env.VITE_API_URL || "http://localhost:3001") + "/api/leads",
   }
 };
 
