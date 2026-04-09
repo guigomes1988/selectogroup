@@ -7,6 +7,14 @@
     {
       "source": "/api/admin/leads",
       "destination": "/api/admin-leads.ts"
+    },
+    {
+      "source": "/api/admin/users",
+      "destination": "/api/admin-users.ts"
+    },
+    {
+      "source": "/api/admin/auth",
+      "destination": "/api/admin-auth.ts"
     }
   ]
 }

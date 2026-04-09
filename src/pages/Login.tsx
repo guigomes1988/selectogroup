@@ -1,22 +1,40 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
-import { Lock, Mail, ChevronRight } from "lucide-react";
+import { Lock, Mail, ChevronRight, Loader2 } from "lucide-react";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simples validação no frontend (a segurança real está na API)
-    if (email === "guigomespublI@gmail.com" && password === "Alvinh02704@") {
-      localStorage.setItem("admin_auth", btoa(`${email}:${password}`));
-      navigate("/painel");
-    } else {
-      setError("Credenciais inválidas. Tente novamente.");
+    setLoading(true);
+    setError("");
+
+    const credentials = btoa(`${email}:${password}`);
+
+    try {
+      const response = await fetch("/api/admin/auth", {
+        headers: {
+          "Authorization": `Basic ${credentials}`
+        }
+      });
+
+      if (response.ok) {
+        localStorage.setItem("admin_auth", credentials);
+        navigate("/painel");
+      } else {
+        const data = await response.json();
+        setError(data.error || "Acesso negado. Verifique suas credenciais.");
+      }
+    } catch (err) {
+      setError("Erro de conexão com o servidor. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,8 +62,9 @@ export function Login() {
                 <input
                   type="email"
                   value={email}
+                  disabled={loading}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 transition-all disabled:opacity-50"
                   placeholder="seu@email.com"
                   required
                 />
@@ -59,8 +78,9 @@ export function Login() {
                 <input
                   type="password"
                   value={password}
+                  disabled={loading}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-white/10 focus:outline-none focus:border-white/30 transition-all disabled:opacity-50"
                   placeholder="••••••••"
                   required
                 />
@@ -79,10 +99,17 @@ export function Login() {
 
             <button
               type="submit"
-              className="w-full group bg-white text-black py-4 rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-white/90 transition-all active:scale-[0.98]"
+              disabled={loading}
+              className="w-full group bg-white text-black py-4 rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-white/90 transition-all active:scale-[0.98] disabled:opacity-50"
             >
-              Entrar no Painel
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              {loading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <>
+                  Entrar no Painel
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </form>
         </div>
@@ -90,7 +117,8 @@ export function Login() {
         <div className="mt-8 text-center">
           <button 
             onClick={() => navigate("/")}
-            className="text-white/30 hover:text-white/60 text-xs transition-colors"
+            disabled={loading}
+            className="text-white/30 hover:text-white/60 text-xs transition-colors disabled:opacity-30"
           >
             ← Voltar para o site
           </button>
