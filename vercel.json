@@ -3,6 +3,10 @@
     {
       "source": "/api/leads",
       "destination": "/api/leads.ts"
+    },
+    {
+      "source": "/api/admin/leads",
+      "destination": "/api/admin-leads.ts"
     }
   ]
 }

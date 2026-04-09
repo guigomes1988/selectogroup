@@ -1,61 +1,29 @@
-import { useEffect } from "react";
-import { Navbar } from "./components/Navbar";
-import { Footer } from "./components/Footer";
-import { WhatsAppButton } from "./components/WhatsAppButton";
-import { Hero } from "./sections/Hero";
-import { About } from "./sections/About";
-import { Operations } from "./sections/Operations";
-import { Verticals } from "./sections/Verticals";
-import { FAQ } from "./sections/FAQ";
-import { Contact } from "./sections/Contact";
-import { motion, useScroll, useSpring } from "motion/react";
-import { siteConfig } from "./config/site";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { LandingPage } from "./pages/LandingPage";
+import { Login } from "./pages/Login";
+import { Dashboard } from "./pages/Dashboard";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export default function App() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  useEffect(() => {
-    // Atualizar Título
-    document.title = siteConfig.seo.title;
-
-    // Atualizar Meta Description
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", siteConfig.seo.description);
-    } else {
-      const newMeta = document.createElement("meta");
-      newMeta.name = "description";
-      newMeta.content = siteConfig.seo.description;
-      document.head.appendChild(newMeta);
-    }
-  }, []);
-
   return (
-    <div className="bg-black min-h-screen text-white selection:bg-white selection:text-black font-sans">
-      {/* Barra de progresso de scroll sutil */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-0.5 bg-white z-[60] origin-left"
-        style={{ scaleX }}
-      />
+    <Router>
+      <Routes>
+        {/* Rota Pública: Landing Page */}
+        <Route path="/" element={<LandingPage />} />
 
-      <Navbar />
-      
-      <main>
-        <Hero />
-        <About />
-        <Operations />
-        <Verticals />
-        <FAQ />
-        <Contact />
-      </main>
+        {/* Rota de Acesso: Login */}
+        <Route path="/acesso" element={<Login />} />
 
-      <Footer />
-      <WhatsAppButton />
-    </div>
+        {/* Rota Protegida: Painel de Leads */}
+        <Route 
+          path="/painel" 
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+    </Router>
   );
 }

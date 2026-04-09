@@ -39,15 +39,50 @@ app.post('/api/leads', async (req, res) => {
     const query = 'INSERT INTO leads (name, email, message) VALUES ($1, $2, $3) RETURNING *';
     const values = [name, email, message];
     const result = await pool.query(query, values);
-    
-    res.status(201).json({ 
-      success: true, 
-      message: 'Contato recebido com sucesso!',
-      data: result.rows[0] 
-    });
+    res.status(201).json({ success: true, data: result.rows[0] });
   } catch (error) {
     console.error('Erro ao salvar lead:', error);
     res.status(500).json({ error: 'Erro interno ao salvar os dados.' });
+  }
+});
+
+// Admin Endpoints
+app.get('/api/admin/leads', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ error: 'Não autorizado' });
+
+  const auth = authHeader.split(' ')[1];
+  const [user, pass] = Buffer.from(auth, 'base64').toString().split(':');
+
+  if (user !== process.env.ADMIN_USER || pass !== process.env.ADMIN_PASS) {
+    return res.status(403).json({ error: 'Credenciais inválidas' });
+  }
+
+  try {
+    const result = await pool.query('SELECT * FROM leads ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar leads' });
+  }
+});
+
+app.delete('/api/admin/leads', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ error: 'Não autorizado' });
+
+  const auth = authHeader.split(' ')[1];
+  const [user, pass] = Buffer.from(auth, 'base64').toString().split(':');
+
+  if (user !== process.env.ADMIN_USER || pass !== process.env.ADMIN_PASS) {
+    return res.status(403).json({ error: 'Credenciais inválidas' });
+  }
+
+  try {
+    const { id } = req.query;
+    await pool.query('DELETE FROM leads WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao excluir lead' });
   }
 });
 
